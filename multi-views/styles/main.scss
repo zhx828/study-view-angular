@@ -51,6 +51,15 @@ body {
 }
 #summary .navbar-nav {
   position: fixed;
+  left: 0;
+  right: 0;
+}
+#summary .navbar-nav .container .topButtons{
+  margin-left: 50px;
+  margin-right: 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 2px dotted #2968e2;
 }
 #summary .dc-charts {
   margin-top: 40px;
