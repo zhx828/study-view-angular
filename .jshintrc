@@ -20,5 +20,7 @@
   "smarttabs": true,
   "globals": {
     "angular": false
-  }
+  },
+  "camelcase": false,
+  "sub": false
 }

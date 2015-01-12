@@ -1,5 +1,5 @@
 {
-  "name": "angular-study-view",
+  "name": "study-multi-views",
   "version": "0.0.0",
   "dependencies": {
     "angular": "~1.2.0",

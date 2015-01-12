@@ -48,7 +48,7 @@
         </div>
       </div>
     </header>
-    <div class="container">
+    <div class="container" ng-controller="MainCtrl">
       <div class="body">
         <div class="left-funs animated" ng-class="{'fadeInRight':clicked,'fadeOutRight':!clicked}">
           <ul class="nav">
@@ -134,7 +134,7 @@
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/services/dataproxy.js"></script>
         <!-- endbuild -->
 </body>
 </html>
