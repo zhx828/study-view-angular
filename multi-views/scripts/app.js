@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc overview
- * @name StudyMultiViewsApp
+ * @name studyMultiViewsApp
  * @description
- * # StudyMultiViewsApp
+ * # studyMultiViewsApp
  *
  * Main module of the application.
  */
 angular
-  .module('StudyMultiViewsApp', [
+  .module('studyMultiViewsApp', [
     'ngAnimate',
     'ngCookies',
     'ngResource',

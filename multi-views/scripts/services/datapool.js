@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name StudyMultiViewsApp.DataPool
+ * @name studyMultiViewsApp.DataPool
  * @description
  * # DataPool
- * Factory in the StudyMultiViewsApp.
+ * Factory in the studyMultiViewsApp.
  */
-angular.module('StudyMultiViewsApp')
+angular.module('studyMultiViewsApp')
   .factory('DataPool', function ($http, $q) {
     var fromFile = true;
 
