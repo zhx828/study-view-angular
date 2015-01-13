@@ -3,7 +3,7 @@
 describe('Service: DataPool', function () {
 
   // load the service's module
-  beforeEach(module('angularStudyViewApp'));
+  beforeEach(module('StudyMultiViewsApp'));
 
   // instantiate service
   var DataPool;
