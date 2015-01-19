@@ -86,17 +86,16 @@ angular.module('studyMultiViewsApp')
         mainData.patient.idStr = mainData.patient.ids.join(' ');
         console.info(mainData.sample.idsL, ': number of sampels');
         console.info(mainData.patient.idsL, ': number of patients');
-        data = null;
     }
 
     function trimClinicalData(d) {
         //Reorganize data into wanted format datum[ caseID ][ Attribute Name ] = Attribute Value
         //The original data structure is { attr_id: , attr_val, sample}
 
-        var sDataM = {}, //Map sample attrbute value with attribute name for each datum
-        pDataM = {}, //Map patient attrbute value with attribute name for each datum
-        sIndexM = {},
-        pIndexM = {},
+        var sDataM = {},    //Map sample attrbute value with attribute name for each datum
+        pDataM = {},    //Map patient attrbute value with attribute name for each datum
+        sIndexM = {},   //attr_id: index(in the sample.attr)
+        pIndexM = {},   //same as above
         arr = d.data,
         attr = d.attributes.map(function(e){
           e.display_name = e.display_name.toString().split(/\s|_/).join(' ');
@@ -124,6 +123,7 @@ angular.module('studyMultiViewsApp')
         var seperatedAttr = seperateAttr(attr),
         pAttr = seperatedAttr.patient,
         sAttr = seperatedAttr.sample,
+        allAttr = seperatedAttr.all,
         sAttrC = attrClass(sAttr),
         pAttrC = attrClass(pAttr);
 
@@ -147,12 +147,45 @@ angular.module('studyMultiViewsApp')
                 }
                 sDataM[a][b] = c;
             }
-            if(!attrKeys.hasOwnProperty(b)) {
-                attrKeys[b] = [];
+            if(!allAttr[b].hasOwnProperty('keys')) {
+                allAttr[b].keys = [];
             }
 
-            if(attrKeys[b].indexOf(c) === -1) {
-                attrKeys[b].push(c);
+            if(allAttr[b].keys.indexOf(c) === -1) {
+                allAttr[b].keys.push(c);
+            }
+        }
+
+        //Add dc chart type and keys type for each attribute
+        for(var key in allAttr) {
+            var keys = allAttr[key].keys || [];
+
+            if(allNumber(keys)) {
+                allAttr[key].keyType = 'allnumeric';
+            }else {
+                allAttr[key].keyType = 'string';
+            }
+
+            if(['NUMBER', 'BOOLEAN'].indexOf(allAttr[key].dataType) !== -1 || allAttr[key].keyType === 'allnumeric') {
+                if(keys.length>10 || ['AGE', 'MUTATION_COUNT', 'COPY_NUMBER_ALTERATIONS'].indexOf(key) !== -1) {
+                    allAttr[key].dcType = 'bar';
+                }else {
+                    allAttr[key].dcType = 'pie';
+                }
+            }else {
+                allAttr[key].dcType = 'pie';
+            }
+
+            if(allAttr[key].keyType === 'allnumeric') {
+                var _max = Math.max.apply( Math, keys),
+                _min = Math.min.apply( Math, keys );
+                allAttr[key].keyRange = {
+                    diff : _max - _min,
+                    min : _min,
+                    max : _max
+                };
+            }else{
+                allAttr[key].keyRange = undefined;
             }
         }
 
@@ -188,16 +221,7 @@ angular.module('studyMultiViewsApp')
         mainData.patient.indexM = pIndexM;
         mainData.patient.attr = pAttr;
         mainData.sample.attr = sAttr;
-        mainData.attrKeys = attrKeys;
-        d = null;
-        sIndexM = null;
-        pIndexM = null;
-        sAttr = null;
-        pAttr = null;
-        arr = null;
-        attr = null;
-        sDataM = null;
-        pDataM = null;
+        mainData.attr = allAttr;
         console.log('------------------------------------------------');
         console.info(mainData.patient.attr.length, ': number of patient attributs');
         console.info(mainData.patient.arr.length, ': number of patient data');
@@ -222,7 +246,6 @@ angular.module('studyMultiViewsApp')
                 }
             }
         }
-        data = null;
     }
 
     function trimMutationCount(data){
@@ -248,7 +271,6 @@ angular.module('studyMultiViewsApp')
                 mainData.sample.arr[mainData.sample.indexM[e]].MUTATION_COUNT = _data;
             });
         }
-        data = null;
     }
 
     function trimCNAFraction(data){
@@ -271,28 +293,24 @@ angular.module('studyMultiViewsApp')
                 mainData.sample.arr[mainData.sample.indexM[e]].COPY_NUMBER_ALTERATIONS = _data;
             });
         }
-        data = null;
     }
 
     function trimSMG(data){
         if(angular.isObject(data)) {
             mainData.mutatedGenes = data;
         }
-        data = null;
     }
 
     function trimCNA(data){
         if(angular.isObject(data)) {
             mainData.cna = data;
         }
-        data = null;
     }
 
     function trimGistic(data){
         if(angular.isObject(data)) {
             mainData.gistic = data;
         }
-        data = null;
     }
 
     function extendAttr(attr, key, datum) {
@@ -308,9 +326,13 @@ angular.module('studyMultiViewsApp')
     }
 
     function seperateAttr(attr) {
+        //Sample and patient attributes will be seperated into three groups.
+        //'sample'/'patient' groups will be stored as array. 
+        //'all' will be stored as object, attr_id will be the key
         var seperatedAttr = {
             sample: [],
-            patient: []
+            patient: [],
+            all: {}
         };
 
         if(angular.isArray(attr)) {
@@ -321,11 +343,19 @@ angular.module('studyMultiViewsApp')
                         b = !!b;
                     }
 
+                    if(!seperatedAttr.all.hasOwnProperty(e.attr_id)) {
+                        seperatedAttr.all[e.attr_id] = angular.copy(e);
+                    }
+
                     if(b) {
                         seperatedAttr.patient.push(e);
+                        seperatedAttr.all[e.attr_id].group = 'patient'; //For using in dc groups
                     }else {
                         seperatedAttr.sample.push(e);
+                        seperatedAttr.all[e.attr_id].group = 'sample'; //For using in dc groups
                     }
+                    delete seperatedAttr.all[e.attr_id].patient_attr; //For using in dc groups
+
                 }else {
                     console.info(e.attr_id, 'does not have patient_attr attribute.');
                     console.log(e);
@@ -355,6 +385,20 @@ angular.module('studyMultiViewsApp')
         return datum;
     }
 
+    function allNumber(array) {
+        var flag = true;//all number flag;
+        if(angular.isArray(array)) {
+            for(var i = 0, aL = array.length ; i < aL; i++) {
+                if(array[i] !== 'NA' && isNaN(array[i])){
+                    flag = false;
+                    break;
+                }
+            }
+        }else {
+            flag = false;
+        }
+        return flag;
+    }
     return {
         main: main
     };

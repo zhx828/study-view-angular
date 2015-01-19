@@ -16,7 +16,8 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'angular-underscore'
+    'angular-underscore',
+    'angular-packery'
   ])
   //$q.allSettled comes from http://jsfiddle.net/Zenuka/pHEf9/
   //Angular team is planning to add this function in next release
