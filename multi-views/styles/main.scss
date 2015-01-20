@@ -47,7 +47,7 @@ body {
   color: #000;
 }
 #summary {
-  padding: 10px 50px;
+  padding: 10px 10px;
 }
 #summary .navbar-nav {
   position: fixed;
@@ -55,8 +55,8 @@ body {
   right: 0;
 }
 #summary .navbar-nav .container .topButtons{
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: 20px;
+  margin-right: 20px;
   padding-top: 10px;
   padding-bottom: 10px;
   border-bottom: 2px dotted #2968e2;
@@ -79,7 +79,9 @@ body {
   border: 1px solid #2986e2;
   border-radius: 0;
 }
-
+.widget.panel.panel-default {
+    height: 100%;
+}
 /*Overide bootstrap styles*/
 .navbar {
   min-height: 80px;
@@ -152,13 +154,44 @@ header .navbar-nav {
 .btn-info:hover {
   background-color: #0066cb;
 }
-
-.packery-sizer, .packery-object {
-  width: 200px;
-  height: 200px;
+.panel-heading {
+    padding: 2px;
+    border-radius: 0;
+    height: 19px;
+}
+.panel-title {
+    font-family: Verdana,Arial,sans-serif;
+    font-size: 11px;
+    color: black;
+    font-weight: bold;
+}
+.panel-title div {
+    float: right;
+}
+.panel-title i {
+    color: gray;
+}
+.panel-body {
+    padding: 5px 15px;
+}
+.panel-default > .panel-heading {
+    background-color: #fff;
 }
 
+//Edit malhar-angular-dashboard default style
 
+
+//Change Font-Awesome styels
+.fa-download:hover, .fa-refresh:hover, .fa-table:hover, .fa-pie-chart:hover, .fa-close:hover, .fa-survival:hover{
+    cursor: pointer;
+}
+.fa-arrows:hover{
+    cursor: move;
+}
+.fa-survival {
+    width:10px;
+    margin-bottom: 2px;
+}
 
 //Styles from study view, need to reorganize and remove unused styles 
 #study-view-top-wrapper {
@@ -631,10 +664,10 @@ header .navbar-nav {
     cursor: move;
 }
 .study-view-dc-chart-delete {
-    float: left;
-    margin-right: 5px;
-    color: grey;
-    cursor: pointer;
+    // float: left;
+    // margin-right: 5px;
+    // color: grey;
+    // cursor: pointer;
 }
 .study-view-tables-delete {
     float: left;
@@ -673,43 +706,14 @@ header .navbar-nav {
 }
 
 .study-view-drag-icon {
-    width:10px;
-    height:10px;
-    margin-top:4px;
-    margin-right:4px;
-    float:left;
+    // width:10px;
+    // height:10px;
+    // margin-top:4px;
+    // margin-right:4px;
+    // float:left;
 }
 .study-view-drag-icon:hover{
     cursor: move;
-}
-.study-view-survival-icon {
-    width:10px;
-    height:12px;
-    margin-top:2px;
-    margin-right:2px;
-    float:left;
-}
-.study-view-survival-icon:hover{
-    cursor: pointer;
-}
-.study-view-download-icon {
-    width:10px;
-    height:10px;
-    margin-top:4px;
-    margin-right:4px;
-    float:left;
-}
-.study-view-title-icon {
-    width:12px;
-    height:12px;
-    margin-top:2px;
-    margin-right:4px;
-    float:left;
-}
-.study-view-table-icon {
-    width:11px;
-    margin-top:3px;
-    margin-right:5px;
 }
 #study-view-transfer-icon {
     width:9px;
@@ -732,32 +736,13 @@ header .navbar-nav {
 .hoverRow {
     background-color: lightgrey !important;
 }
-/*.study-view-expand-icon {
-    width:9px;
-    height:9px;
-    margin-top:6px;
-    margin-right:4px;
-    margin-left:1px;
-    float:left;
-}
-.study-view-contract-icon {
-    width:9px;
-    height:9px;
-    margin-top:6px;
-    margin-right:4px;
-    margin-left:1px;
-    float:left;
-    display: none;
-}*/
 .study-view-bar-chart path {
     shape-rendering: crispEdges
 }
 .study-view-bar-chart .tick line {
     shape-rendering: crispEdges
 }
-.study-view-download-icon:hover{
-    cursor: pointer;
-}
+
 .study-view-side-item {
     float: left;
     display: block;

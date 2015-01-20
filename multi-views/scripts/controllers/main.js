@@ -9,8 +9,8 @@
  */
 angular.module('studyMultiViewsApp')
   .controller('MainCtrl',
-  	['$scope', '$compile', 'DataProxy', 'DataPool',
-  	function ($scope, $compile, DataProxy, DataPool) {
+  	['$scope', '$compile', 'DataProxy', 'DataPool', 'crossfilter',
+  	function ($scope, $compile, DataProxy, DataPool, crossfilter) {
   		function init() {
   			//Get global variables
         	var startTS = new Date().getTime();
@@ -135,15 +135,71 @@ angular.module('studyMultiViewsApp')
 		    });
   		}
 
+        // function dcDimensionGroup() {
+
+        // }
+
   		//Generate two crossfilters for two visions
   		function setCrossFilters() {
         //crossfilter is global library
-  			$scope.cfPatient = crossfilter($scope.patient.arr);
-  			$scope.cfSample = crossfilter($scope.sample.arr);
+            $scope.cf = {
+                sample: crossfilter($scope.sample.arr),
+                patient: crossfilter($scope.patient.arr)
+            };
+
+            console.log($scope);
+            var widgetDefinitions = [
+              {
+                name: 'dcPie',
+                directive: 'dc-pie'
+              }
+            ];
+            var defaultWidgets = [];
+            var i = 0;
+            for (var key in $scope.attr) {
+                var datum = $scope.attr[key];
+                if(i < 10) {
+                    if(datum.dcType === 'pie') {
+                        defaultWidgets.push({
+                            name: 'dcPie',
+                            directive: 'dc-pie',
+                            attrs: {
+                                'cf': 'cf',
+                                'attrid': datum.attr_id,
+                                'group': datum.group
+                            }
+                        });
+                        i++;
+                    }
+                }else {
+                    break;
+                }
+            };
+
+            $scope.gridsterOpts = {
+                defaultSizeX: 1, // the default width of a gridster item, if not specifed
+                defaultSizeY: 1,
+                colWidth: 175,
+                swapping: true,
+                draggable: {
+                    enabled: true,
+                    handle: '.study-view-drag-icon'
+                },
+                resizable: {
+                    enabled: false,
+                    handles: ['n', 'e', 's', 'w', 'ne', 'sw']
+                }
+            };
+
+            $scope.dashboardOptions = {
+              widgetButtons: true,
+              widgetDefinitions: widgetDefinitions,
+              defaultWidgets: defaultWidgets
+            };
 
  			console.log('------------------------------------------------');
-  			console.log('Patient crossfilter has ', $scope.cfPatient.size(), 'data');
-  			console.log('Sample crossfilter has ', $scope.cfSample.size(), 'data');
+  			console.log('Patient crossfilter has ', $scope.cf.patient.size(), 'data');
+  			console.log('Sample crossfilter has ', $scope.cf.sample.size(), 'data');
  			console.log('------------------------------------------------');
   		}
 

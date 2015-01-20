@@ -17,12 +17,28 @@ angular
     'ngSanitize',
     'ngTouch',
     'angular-underscore',
-    'angular-packery'
+    'ui.bootstrap',
+    'ui.dashboard',
+    'angularDc',
+    'gridster'
   ])
+  .constant('dc', dc)
+  .constant('crossfilter', crossfilter)
+  //Lodash object used in angular
+  .constant('_', window._)
   //$q.allSettled comes from http://jsfiddle.net/Zenuka/pHEf9/
   //Angular team is planning to add this function in next release
   //Need to remove once updated in angular
-  .config(['$provide', function ($provide) {
+  .config(['$provide', '$routeProvider', function ($provide, $routeProvider) {
+  	$routeProvider
+      	.when('/', {
+	        templateUrl: 'views/main.html',
+	        controller: 'MainCtrl'
+    	})
+      	.otherwise({
+        	redirectTo: '/'
+      	});
+        
 	$provide.decorator('$q', ['$delegate', function ($delegate) {
 		var $q = $delegate;
 

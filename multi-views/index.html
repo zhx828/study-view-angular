@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
     <link rel="stylesheet" href="bower_components/dcjs/dc.css" />
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="bower_components/angular-gridster/dist/angular-gridster.min.css" />
+    <link rel="stylesheet" href="bower_components/datatables/media/css/jquery.dataTables.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -48,38 +50,7 @@
         </div>
       </div>
     </header>
-    <div class="container" ng-controller="MainCtrl">
-      <div class="body">
-        <div class="left-funs animated" ng-class="{'fadeInRight':clicked,'fadeOutRight':!clicked}">
-          <ul class="nav">
-            <li><a href="#">HOME</a></li>
-            <li><a href="#">DATA SETS</a></li>
-            <li><a href="#">TUTORIALS</a></li>
-            <li><a href="#">FAQ</a></li>
-            <li><a href="#">NEWS</a></li>
-            <li><a href="#">TOOLS</a></li>
-            <li><a href="#">ABOUT</a></li>
-          </ul>
-        </div>
-        <div id='summary'>
-          <div class="nav navbar-nav">
-            <div class="container">
-              <div class="topButtons">
-                <button class="btn btn-info">Select cases by IDs</button>
-                <button class="btn btn-info">Query all samples</button>
-                <button class="btn btn-info">View all cases</button>
-              </div>
-            </div>
-          </div>
-          <packery class="dc-charts">
-                <packery-object ng-repeat="attr in testAttr">
-                <dc-pie ng-if="attr.dcType === 'pie'" group="{{attr.group}}" attrid="{{attr.attr_id}}"></dc-pie>
-                <dc-bar ng-if="attr.dcType === 'bar'" group="{{attr.group}}" attrid="{{attr.attr_id}}"></dc-bar>
-                </packery-object>
-          </packery>
-        </div>
-        <div id='clinicalTable'></div>
-      </div>
+    <div class="container" ng-view="">
     </div>
     <footer class="footer">
       <div class="container"></div>
@@ -133,21 +104,16 @@
     <script src="bower_components/d3/d3.js"></script>
     <script src="bower_components/crossfilter/crossfilter.js"></script>
     <script src="bower_components/dcjs/dc.js"></script>
-    <script src="bower_components/classie/classie.js"></script>
-    <script src="bower_components/get-style-property/get-style-property.js"></script>
-    <script src="bower_components/get-size/get-size.js"></script>
-    <script src="bower_components/eventie/eventie.js"></script>
-    <script src="bower_components/doc-ready/doc-ready.js"></script>
-    <script src="bower_components/eventEmitter/EventEmitter.js"></script>
-    <script src="bower_components/matches-selector/matches-selector.js"></script>
-    <script src="bower_components/outlayer/item.js"></script>
-    <script src="bower_components/outlayer/outlayer.js"></script>
-    <script src="bower_components/packery/js/rect.js"></script>
-    <script src="bower_components/packery/js/packer.js"></script>
-    <script src="bower_components/packery/js/item.js"></script>
-    <script src="bower_components/packery/js/packery.js"></script>
-    <script src="bower_components/draggabilly/draggabilly.js"></script>
-    <script src="bower_components/angular-packery/dist/packery.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/jquery-ui/jquery-ui.js"></script>
+    <script src="bower_components/angular-ui-sortable/sortable.js"></script>
+    <script src="bower_components/lodash/dist/lodash.compat.js"></script>
+    <script src="bower_components/malhar-angular-dashboard/dist/angular-ui-dashboard.js"></script>
+    <script src="bower_components/javascript-detect-element-resize/detect-element-resize.js"></script>
+    <script src="bower_components/angular-gridster/src/angular-gridster.js"></script>
+    <script src="bower_components/angular-dc/dist/angular-dc.js"></script>
+    <script src="bower_components/datatables/media/js/jquery.dataTables.js"></script>
+    <script src="bower_components/angular-datatables/dist/angular-datatables.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -158,8 +124,8 @@
         <script src="scripts/services/datapool.js"></script>
         <script src="scripts/services/chartsproxy.js"></script>
         <script src="scripts/services/mainproxy.js"></script>
-        <script src="scripts/directives/dcpie.js"></script>
-        <script src="scripts/directives/dcbar.js"></script>
+        <script src="scripts/widgets/dcPie/dcpie.js"></script>
+        <script src="scripts/widgets/dcBar/dcbar.js"></script>
         <!-- endbuild -->
 </body>
 </html>
