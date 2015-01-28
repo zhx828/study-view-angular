@@ -15,7 +15,10 @@ body {
 @media (max-width: 992px){
 }
 
-@media (min-width: 768px){
+@media (min-width: 800px) and (max-width: 992px){
+    .container {
+        width: 800px;
+    }
 }
 
 .footer {
@@ -55,8 +58,8 @@ body {
   right: 0;
 }
 #summary .navbar-nav .container .topButtons{
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
   border-bottom: 2px dotted #2968e2;
@@ -173,13 +176,30 @@ header .navbar-nav {
 }
 .panel-body {
     padding: 5px 15px;
+    font-size: 11px;
+}
+.panel {
+    margin: 0;
 }
 .panel-default > .panel-heading {
     background-color: #fff;
 }
 
+.packery-sizer, .packery-object {
+  width: 480px;
+  height: 170px;
+}
+
 //Edit malhar-angular-dashboard default style
 
+
+//Edit jquery datatable styles
+table.dataTable tbody th, table.dataTable tbody td {
+    padding: 3px 5px;
+}
+table.dataTable thead th, table.dataTable thead td {
+    padding: 5px 5px;
+}
 
 //Change Font-Awesome styels
 .fa-download:hover, .fa-refresh:hover, .fa-table:hover, .fa-pie-chart:hover, .fa-close:hover, .fa-survival:hover{

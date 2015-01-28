@@ -26,28 +26,32 @@
         <button ng-click="clear();" type="button" class="btn btn-info">Clear</button>
     </div> -->
 
-    <div gridster="gridsterOpts" ng-model="widgets" class="dashboard-widget-area">
-        <div gridster-item row="widget.position[0]" col="widget.position[1]" size-x="widget.range.x" size-y="widget.range.y" ng-repeat="widget in widgets" widget>
-            <div class="widget panel panel-default">
-                <div class="widget-header panel-heading">
-                    <h3 class="panel-title">
-                        <span popover-placement="top" popover-trigger="hover" popover="{{widget.title}}" class="widget-title" ng-dblclick="editTitle(widget)" ng-hide="widget.editingTitle">{{widget.title}}</span>
-                        <div>
-                            <i class="fa fa-refresh"></i>
-                            <!-- Fake survival fontawesome icon, in order to manage -->
-                            <img class="fa-survival" src="images/survival_icon.svg"/>
-                            <i class="fa fa-pie-chart"></i>
-                            <i class="fa fa-table"></i>
-                            <i class="fa fa-download"></i>
-                            <i class="fa fa-arrows"></i>
-                            <i class="fa fa-close"></i>
+    <packery gutter="8">
+        <div ng-model="widgets" class="dashboard-widget-area">
+            <div ng-repeat="widget in widgets" widget>
+                <packery-object>
+                    <div class="widget panel panel-default">
+                        <div class="widget-header panel-heading">
+                            <h3 class="panel-title">
+                                <span popover-placement="top" popover-trigger="hover" popover="{{widget.title}}" class="widget-title" ng-dblclick="editTitle(widget)" ng-hide="widget.editingTitle">{{widget.title}}</span>
+                                <div>
+                                    <i class="fa fa-refresh"></i>
+                                    <!-- Fake survival fontawesome icon, in order to manage -->
+                                    <img class="fa-survival" src="images/survival_icon.svg"/>
+                                    <i class="fa fa-pie-chart"></i>
+                                    <i class="fa fa-table"></i>
+                                    <i class="fa fa-download"></i>
+                                    <i class="fa fa-arrows"></i>
+                                    <i class="fa fa-close"></i>
+                                </div>
+                            </h3>
                         </div>
-                    </h3>
-                </div>
-                <div class="panel-body widget-content" ng-style="widget.contentStyle"></div>
-                <div class="widget-ew-resizer" ng-mousedown="grabResizer($event)"></div>
-                <div ng-if="widget.enableVerticalResize" class="widget-s-resizer" ng-mousedown="grabSouthResizer($event)"></div>
+                        <div class="panel-body widget-content" ng-style="widget.contentStyle"></div>
+                        <div class="widget-ew-resizer" ng-mousedown="grabResizer($event)"></div>
+                        <div ng-if="widget.enableVerticalResize" class="widget-s-resizer" ng-mousedown="grabSouthResizer($event)"></div>
+                    </div>
+                </packery-object>
             </div>
         </div>
-    </div>
+    </packery>
 </div>
